@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+</head>
+<body>
+    <textarea style="height: 480px;">
+        UPDATE e4_user SET e4_password = '12345', e4_passwordversion = 0 WHERE e4_username = 'admin';
+
+        DECLARE @moduleId uniqueidentifier = (SELECT TOP (1) e4_moduleid FROM dbo.e4_module WHERE e4_code = 'AS');
+
+        UPDATE dbo.e4_userrolemodule
+        SET e4_moduleid = @moduleId
+        WHERE e4_userrolemoduleid = '___'
+    </textarea>
+</body>
+</html> 
