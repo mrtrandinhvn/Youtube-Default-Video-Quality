@@ -1,0 +1,22 @@
+body {
+    width: 7em;
+}
+
+.qualityValue {
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+    text-align: center;
+    font-size: 2em;
+    color: #717171;
+    height: 1.5em;
+    border-radius: .3em;
+}
+
+    .qualityValue:hover {
+        background-color: #E6E6E6;
+    }
+
+.selected {
+    background-color: greenyellow;
+}

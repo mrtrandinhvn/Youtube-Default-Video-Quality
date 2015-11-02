@@ -8,9 +8,9 @@
                 "https://www.youtube.com/watch*"
             ],
             "js": [
-                "js/jquery-1.11.3.min.js",
-                "js/commonfns.js",
-                "js/main.js"
+                "js/contentscriptjs/jquery-1.11.3.min.js",
+                "js/contentscriptjs/commonfns.js",
+                "js/contentscriptjs/main.js"
             ]
         }
     ],
@@ -27,6 +27,12 @@
         },
         "default_popup": "default_popup.html"
     },
+    "permissions": [
+        "storage"
+    ],
+    "web_accessible_resources": [
+        "js/contentscriptjs/commonfns.js"
+    ],
     "manifest_version": 2,
     "author": "goseidinh"
 }
