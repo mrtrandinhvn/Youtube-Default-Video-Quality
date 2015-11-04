@@ -1,18 +1,7 @@
-function onPlaybackQualityChange(data, args) {
-    console.log("onPlaybackQualityChange");
-    console.log(data);
-    console.log(args);
-}
+var youtubeSettingsObj = { defaultQualty: 360 };
+var chromeStorage = chrome.storage.sync;
 
-function onYouTubePlayerReady(player) {
-    console.log("onYouTubePlayerReady");
-    console.log(player);
-}
 
-function onYouTubeHTML5PlayerReady(player) {
-    console.log("onYouTubeHTML5PlayerReady");
-    console.log(player);
-}
 // check if object is an array or not
 function isArray(object) {
     return Object.prototype.toString.call(object) === "[object Array]";
