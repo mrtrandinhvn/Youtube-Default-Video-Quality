@@ -1,15 +1,10 @@
-// quality option elements
-var qualityValueElements;
-// local setting object
-var youtubeSettingsObj = { defaultQualty: 360 };
-var chromeStorage = chrome.storage.sync;
 //#region Utilities
 // click to choose an option
 function click_SelectOption(event) {
-    setDefaultQuality(event.currentTarget.dataset.quality);
+    saveDefaultQuality(event.currentTarget.dataset.quality);
 }
 
-function setDefaultQuality(value) {
+function saveDefaultQuality(value) {
     youtubeSettingsObj.defaultQualty = value;
     updateSettingObj();
     updateSelectedOption();
@@ -41,7 +36,7 @@ function bindEventToElements() {
         qualityValueElements[i].addEventListener("click", click_SelectOption);
     }
 }
-function loadSettings() {
+function loadSettings(chromeStorage) {
     chromeStorage.get(null, function (data) {
         if (data.youtubeSettingsObj) {
             youtubeSettingsObj = data.youtubeSettingsObj;
