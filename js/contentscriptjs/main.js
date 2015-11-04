@@ -17,6 +17,17 @@ var chromeStorage = chrome.storage.sync;
 		var executeScript = "(" + // stringify script
 			function (youtubeSettingsObj) {
 				var playerList = document.getElementsByClassName('html5-video-player');
+				if(playerList.length == 0){
+					var findPlayerListInterval = setInterval(function(){
+						debugger;
+						playerList = document.getElementsByClassName('html5-video-player');
+						if(playerList.length > 0){
+							doMain();
+							clearInterval(findPlayerListInterval);
+						}
+					}, 1000);	
+				}
+				
 				var playerState = {
 					UNSTARTED: -1,
 					END: 0,
