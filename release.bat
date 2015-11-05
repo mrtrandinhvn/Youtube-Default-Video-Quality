@@ -1,4 +1,5 @@
-if not exist "release" mkdir "release"
+if exist "release" rd "release" /s /q
+mkdir "release"
 xcopy css release\css\ /e /y
 xcopy img release\img\ /e /y
 xcopy js release\js\ /e /y
