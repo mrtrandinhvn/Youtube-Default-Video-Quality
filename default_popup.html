@@ -5,17 +5,31 @@
     <!--<script src="/js/jquery-1.11.3.min.js"></script>-->
     <script src="/js/popupjs/commonfns.js"></script>
     <script src="/js/popupjs/main.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="/css/popupcss/mainstyle.css">
+    <link rel="stylesheet" type="text/css" href="css/popupcss/mainstyle.css">
 </head>
 <body>
-	<div data-quality="highres" class="qualityValue">2160p</div>
-    <div data-quality="hd1080" class="qualityValue">1080p</div>
-    <div data-quality="hd720" class="qualityValue">720p</div>
-    <div data-quality="large" class="qualityValue">480p</div>
-    <div data-quality="medium" class="qualityValue">360p</div>
-    <div data-quality="small" class="qualityValue">240p</div>
-    <div data-quality="tiny" class="qualityValue">144p</div>
-	<div data-quality="default" class="qualityValue">Auto</div>
+	<div class="settings" id ="quality">
+		<div class="header">Quality</div>
+		<div data-quality="highres" class="qualityValue">2160p</div>
+		<div data-quality="hd1080" class="qualityValue">1080p</div>
+		<div data-quality="hd720" class="qualityValue">720p</div>
+		<div data-quality="large" class="qualityValue">480p</div>
+		<div data-quality="medium" class="qualityValue">360p</div>
+		<div data-quality="small" class="qualityValue">240p</div>
+		<div data-quality="tiny" class="qualityValue">144p</div>
+		<div data-quality="default" class="qualityValue">Auto</div>
+	</div>
+	<div class="settings" id="annotation">
+		<div class="header">Annotation</div>
+		<div><input type="checkbox" name="annotationCheckbox" class="annotationValue"></div>
+	</div>
+	<div class="settings" id="loop">
+		<div class="header">Loop</div>
+		<div><input type="checkbox" name="loopCheckbox" class="loopValue"></div>
+	</div>
+	<div class="clear"></div>
+	<div style="color: red; font-size: 14px; width: 91%;">**You will need to refresh youtube page (I recommend you refresh using Ctrl + F5 keys) to apply these settings**</div> 
+	<div id="message"></div>
+	
 </body>
 </html> 

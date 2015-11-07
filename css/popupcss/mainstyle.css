@@ -1,5 +1,5 @@
 body {
-    width: 7em;
+    width: 30em;
 }
 
 .qualityValue {
@@ -7,7 +7,7 @@ body {
     width: 100%;
     font-weight: bold;
     text-align: center;
-    font-size: 2em;
+    font-size: 1.5em;
     color: #717171;
     height: 1.5em;
     border-radius: .3em;
@@ -19,4 +19,36 @@ body {
 
 .selected {
     background-color: greenyellow;
+}
+
+.settings{
+	float:left;
+	width:30%;
+	border:solid 1px black;
+	height:21em;
+	margin-left:-1px;
+}
+.header{
+    width: 100%;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.5em;
+    color: #717171;
+    height: 1.5em;
+	border-bottom: 1px solid black;
+	padding: 5px 0;
+    background-color: #C3FFDB;
+}
+input.annotationValue,
+input.loopValue{
+	height: 2em;
+    width: 100%;
+    margin: 5px 0;
+}
+.clear {
+	clear:both!important;
+}
+#message{
+	color:green;
+	text-align:center;
 }

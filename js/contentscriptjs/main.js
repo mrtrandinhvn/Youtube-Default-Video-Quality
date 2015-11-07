@@ -14,11 +14,14 @@ var chromeStorage = chrome.storage.sync;
     
     // execute after settings are fully loaded
     function doMain() {
+		var runTime = 0;
         var firstRun = setInterval(function() {
             // check if player is ready every 500ms
             if (isPlayerReady()) {
                 setVideoQuality(youtubeSettingsObj.defaultQualty);
-                showAnnotation(youtubeSettingsObj.showAnnotation);
+                setAnnotation(youtubeSettingsObj.showAnnotation);
+				setLoop(youtubeSettingsObj.loop);
+				runTime++;
                 clearInterval(firstRun);
             }
         }
@@ -28,9 +31,10 @@ var chromeStorage = chrome.storage.sync;
         var observer = new MutationObserver(function(mutations) {
             mutations.forEach(function(mutation) {
                 if (mutation.attributeName === "src") {
-                    if (mutation.target.src) {
+                    if (mutation.target.src && runTime > 0) {
                         // Apply Settings when player src is changed
                         setVideoQuality(youtubeSettingsObj.defaultQualty);
+						// Annotation setting is applied to a static element's css on firstRun interval
                     }
                 }
             }

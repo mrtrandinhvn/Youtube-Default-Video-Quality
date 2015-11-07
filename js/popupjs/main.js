@@ -1,8 +1,14 @@
 // ======== Key Objects ============
-// quality option elements
-var qualityValueElements;
+// settings option elements
+var qualityValueElements = document.getElementsByClassName("qualityValue");
+var annotationValueElements = document.getElementsByClassName("annotationValue");
+var loopValueElements = document.getElementsByClassName("loopValue");
 // local setting object
-var youtubeSettingsObj = { defaultQualty: "default" };
+var youtubeSettingsObj = {
+		defaultQualty: "default",
+		loop: false,
+		showAnnotation: true
+	};
 // chrome storage object
 var chromeStorage = chrome.storage.sync;
 // ======= END Key Objects =========

@@ -50,18 +50,32 @@ var qualityNumberText = [
 "Auto", "144p", "240p", "360p", "480p", "720p", "1080p", "2160p"
 ];
 
-
-function showAnnotation(show) {
+function setLoop(loop){
+	if(loop === true){
+        document.querySelector("#movie_player video").loop = "none";
+	}
+}
+function setAnnotation(show) {
     if (show === false) {
         document.querySelector("div.video-annotations").style.display = "none";
     }
 }
 function setVideoQuality(qualityValue) {
     var qualityArrayIndex = getQualityIndex(qualityValue);
+	// click on setting icon
     document.querySelectorAll("button.ytp-button.ytp-settings-button")[0].click();
-    document.querySelectorAll(".ytp-menuitem[aria-haspopup=true] .ytp-menuitem-content")[1].click();
-    document.querySelectorAll(".ytp-popup.ytp-settings-menu")[0].style.display = "none";
+	// click on quality option
+    var popupSetting = document.querySelectorAll(".ytp-menuitem[aria-haspopup=true] .ytp-menuitem-content")
+	for(var row in popupSetting){
+		if(popupSetting[row].getElementsByTagName("span").length > 0){
+			popupSetting[row].click();
+			break;
+		}
+	}
     // hide quality selecting menu
+	document.querySelectorAll(".ytp-popup.ytp-settings-menu")[0].style.display = "none";
+	
+	// click on the approriate quality option
     setTimeout(function() {
         var qualityOptions = document.querySelectorAll(".ytp-menu.ytp-quality-menu")[0].querySelectorAll(".ytp-menuitem");
         var isDone = false;
