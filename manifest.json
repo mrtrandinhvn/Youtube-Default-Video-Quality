@@ -30,7 +30,6 @@
         "storage"
     ],
     "web_accessible_resources": [
-        "js/contentscriptjs/execute.js"
     ],
     "manifest_version": 2,
     "author": "goseidinh"
