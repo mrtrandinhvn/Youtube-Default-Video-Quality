@@ -1,6 +1,6 @@
 {
     "name": "Youtube Default Video Quality",
-    "version": "2.0.2",
+    "version": "2.0.3",
     "description": "This is an extension for Chrome base web browsers. It allows users to set default video quality for youtube.com",
     "content_scripts": [
         {

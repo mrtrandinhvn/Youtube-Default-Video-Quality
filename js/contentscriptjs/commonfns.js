@@ -69,37 +69,48 @@ function setAnnotation(show) {
 }
 function setVideoQuality(qualityValue) {
     var qualityArrayIndex = getQualityIndex(qualityValue);
+	var allowClick;
 	// click on setting icon
     document.querySelectorAll("button.ytp-button.ytp-settings-button")[0].click();
 	// click on quality option
-    var popupSetting = document.querySelectorAll(".ytp-menuitem[aria-haspopup=true] .ytp-menuitem-content")
-	for(var row in popupSetting){
-		if(popupSetting[row].getElementsByTagName("span").length > 0){
-			popupSetting[row].click();
-			break;
+	var clickQualityButtonInterval = setInterval(function(){
+			var popupSetting = document.querySelectorAll(".ytp-menuitem[aria-haspopup=true] .ytp-menuitem-content");
+			if(popupSetting.length > 0){
+				// hide quality selecting menu
+				document.querySelectorAll(".ytp-popup.ytp-settings-menu")[0].style.display = "none";
+				// find Quality button and click on it
+				for(var row in popupSetting){
+					if(popupSetting[row].getElementsByTagName("span").length > 0){
+						popupSetting[row].click();
+						allowClick = true;
+						clearInterval(clickQualityButtonInterval);
+						break;
+					}
+				}
+			}
+	},100);
+	var clickQualityValueInterval = setInterval(function(){
+		if(allowClick){
+			clearInterval(clickQualityValueInterval);
+			// click on the approriate quality option
+			setTimeout(function() {
+				var qualityOptions = document.querySelectorAll(".ytp-menu.ytp-quality-menu")[0].querySelectorAll(".ytp-menuitem");
+				var isDone = false;
+				// video might not support the selected value
+				while (!isDone) {
+					for (var i = 0; i < qualityOptions.length; i++) {
+						var qualityNumberSpan = qualityOptions[i].querySelectorAll("span")[0];
+						if (qualityNumberSpan.textContent.includes(qualityNumberText[qualityArrayIndex])) {
+							qualityNumberSpan.click();
+							isDone = true;
+							break;
+						}
+					}
+					qualityArrayIndex--;
+				}
+			}, 300);
 		}
-	}
-    // hide quality selecting menu
-	document.querySelectorAll(".ytp-popup.ytp-settings-menu")[0].style.display = "none";
-	
-	// click on the approriate quality option
-    setTimeout(function() {
-        var qualityOptions = document.querySelectorAll(".ytp-menu.ytp-quality-menu")[0].querySelectorAll(".ytp-menuitem");
-        var isDone = false;
-        // video might not support the selected value
-        while (!isDone) {
-            for (var i = 0; i < qualityOptions.length; i++) {
-                var qualityNumberSpan = qualityOptions[i].querySelectorAll("span")[0];
-                if (qualityNumberSpan.textContent.includes(qualityNumberText[qualityArrayIndex])) {
-                    qualityNumberSpan.click();
-                    isDone = true;
-                    break;
-                }
-            }
-            qualityArrayIndex--;
-        }
-    }
-    , 300);
+	},100);
 }
 function getQualityIndex(qualityValue) {
     for (var i = 0; i < qualityValues.length; i++) {
