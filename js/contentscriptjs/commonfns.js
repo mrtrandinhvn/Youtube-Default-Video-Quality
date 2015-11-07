@@ -58,6 +58,7 @@ function setLoop(loop){
 function setAnnotation(show) {
     if (show === false) {
         document.querySelector("div.video-annotations").style.display = "none";
+		document.querySelector(".annotation.annotation-type-custom.iv-branding").style.display = "none";
     }
 }
 function setVideoQuality(qualityValue) {
