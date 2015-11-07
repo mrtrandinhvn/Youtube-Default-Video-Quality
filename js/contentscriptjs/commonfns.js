@@ -52,13 +52,19 @@ var qualityNumberText = [
 
 function setLoop(loop){
 	if(loop === true){
-        document.querySelector("#movie_player video").loop = "none";
+        if(document.querySelector("#movie_player video")){
+			document.querySelector("#movie_player video").loop = "none";
+		}
 	}
 }
 function setAnnotation(show) {
     if (show === false) {
-        document.querySelector("div.video-annotations").style.display = "none";
-		document.querySelector(".annotation.annotation-type-custom.iv-branding").style.display = "none";
+        if(document.querySelector("div.video-annotations")){
+			document.querySelector("div.video-annotations").style.display = "none";
+		}
+		if(document.querySelector(".annotation.annotation-type-custom.iv-branding")){
+		document.querySelector(".annotation.annotation-type-custom.iv-branding").style.display = "none";	
+		}
     }
 }
 function setVideoQuality(qualityValue) {
