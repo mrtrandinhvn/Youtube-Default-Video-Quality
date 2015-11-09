@@ -59,11 +59,12 @@ function setLoop(loop) {
 }
 function setAnnotation(show) {
     if (show === false) {
-        if (document.querySelector("div.video-annotations")) {
-            document.querySelector("div.video-annotations").style.display = "none";
-        }
-        if (document.querySelector(".annotation.annotation-type-custom.iv-branding")) {
-            document.querySelector(".annotation.annotation-type-custom.iv-branding").style.display = "none";
+        var annotationCssText = ".annotation.annotation-type-custom.iv-branding {display: none!important;}  div.video-annotations{display:none!important;}";
+        if (document.lastChild.textContent !== annotationCssText) { // if this css text has already existed, skip this function
+            var styleTag = document.createElement("style");
+            styleTag.type = "text/css";
+            styleTag.appendChild(document.createTextNode(annotationCssText));
+            document.head.appendChild(styleTag);
         }
     }
 }
