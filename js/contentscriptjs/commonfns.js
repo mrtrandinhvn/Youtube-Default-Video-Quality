@@ -121,7 +121,7 @@ function getQualityIndex(qualityValue) {
     return 0;
 }
 function isPlayerReady() {
-    if (movie_player.getElementsByTagName("video")[0].src) {
+    if (movie_player && movie_player.getElementsByTagName("video")[0].src) {
         return true;
     }
     return false;
