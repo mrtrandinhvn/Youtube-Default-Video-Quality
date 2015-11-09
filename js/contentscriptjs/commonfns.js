@@ -60,8 +60,9 @@ function setLoop(loop) {
 function setAnnotation(show) {
     if (show === false) {
         var annotationCssText = ".annotation.annotation-type-custom.iv-branding {display: none!important;}  div.video-annotations{display:none!important;}";
-        if (document.lastChild.textContent !== annotationCssText) { // if this css text has already existed, skip this function
+        if (document.head.getElementsByClassName("ytdfqlt-annotation").length > 0 !== annotationCssText) { // if this css text has already existed, skip this function
             var styleTag = document.createElement("style");
+			styleTag.className = "ytdfqlt-annotation";
             styleTag.type = "text/css";
             styleTag.appendChild(document.createTextNode(annotationCssText));
             document.head.appendChild(styleTag);
@@ -71,6 +72,14 @@ function setAnnotation(show) {
 function setVideoQuality(qualityValue) {
     var qualityArrayIndex = getQualityIndex(qualityValue);
     var allowClick;
+	// hide setting popup
+	var cssText = ".ytp-popup.ytp-settings-menu{display:none!important;}";
+	var styleTag = document.createElement("style");
+	styleTag.type = "text/css";
+	styleTag.appendChild(document.createTextNode(cssText));
+	document.head.appendChild(styleTag);
+	// end hide setting popup
+	
     // click on setting icon
     document.querySelectorAll("button.ytp-button.ytp-settings-button")[0].click();
     // click on quality option
@@ -91,7 +100,7 @@ function setVideoQuality(qualityValue) {
         }
     }, 100);
     var clickQualityValueInterval = setInterval(function () {
-        if (allowClick) {
+        if (allowClick && document.querySelectorAll(".ytp-menu.ytp-quality-menu").length > 0) {
             clearInterval(clickQualityValueInterval);
             // click on the approriate quality option
             setTimeout(function () {
@@ -109,7 +118,9 @@ function setVideoQuality(qualityValue) {
                     }
                     qualityArrayIndex--;
                 }
-            }, 300);
+				// un-hide setting popup
+				document.head.removeChild(styleTag);
+            }, 400);
         }
     }, 100);
 }
@@ -122,7 +133,7 @@ function getQualityIndex(qualityValue) {
     return 0;
 }
 function isPlayerReady() {
-    if (movie_player && movie_player.getElementsByTagName("video")[0].src) {
+    if (document.getElementById("movie_player") && document.getElementById("movie_player").getElementsByTagName("video")[0].src) {
         return true;
     }
     return false;

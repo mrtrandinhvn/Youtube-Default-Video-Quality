@@ -45,7 +45,6 @@ var chromeStorage = chrome.storage.sync;
                     };
                     // pass in the target node, as well as the observer options
                     observer.observe(target, config);
-
                     clearInterval(firstRun);
                 }
             }, 500);
