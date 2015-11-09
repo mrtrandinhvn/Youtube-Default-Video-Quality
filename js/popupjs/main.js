@@ -9,8 +9,9 @@ var youtubeSettingsObj = {
 		loop: false,
 		showAnnotation: true
 	};
-// chrome storage object
+// chrome extension objects
 var chromeStorage = chrome.storage.sync;
+var chromeAppManifest = chrome.runtime.getManifest();
 // ======= END Key Objects =========
 
 // ====== Executing =========
@@ -18,6 +19,8 @@ var chromeStorage = chrome.storage.sync;
     function doMain(event) {
         bindEventToElements();
         loadSettings(chromeStorage);
+		// show app's version
+		document.getElementById("version").innerHTML = "Version: " + chromeAppManifest.version;
     };
 	// Wait for all markup finish loading
     document.addEventListener("DOMContentLoaded", doMain);

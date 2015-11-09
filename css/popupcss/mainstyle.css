@@ -52,3 +52,16 @@ input.loopValue{
 	color:green;
 	text-align:center;
 }
+#version{
+	font-weight: bold;
+    font-size: 16px;
+    margin: 5px;
+	color: #717171;
+}
+#warning{
+	color: red;
+	font-size: 15px;
+	width: 91%;
+	margin: 5px;
+	font-weight: bold;
+}
