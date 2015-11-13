@@ -59,7 +59,7 @@ function setLoop(loop) {
 }
 function setAnnotation(show) {
     if (show === false) {
-        var annotationCssText = ".annotation.annotation-type-custom.iv-branding {display: none!important;}  div.video-annotations{display:none!important;}";
+        var annotationCssText = ".annotation.annotation-type-custom.iv-branding {display: none!important;}  div.video-annotations{display:none!important;} .annotation{display:none!important;}";
         if (document.head.getElementsByClassName("ytdfqlt-annotation").length > 0 !== annotationCssText) { // if this css text has already existed, skip this function
             var styleTag = document.createElement("style");
 			styleTag.className = "ytdfqlt-annotation";
