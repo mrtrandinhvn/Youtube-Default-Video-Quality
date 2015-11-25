@@ -9,42 +9,43 @@ var youtubeSettingsObj = {
 var chromeStorage = chrome.storage.sync;
 // #endregion ======= END Key Objects =========
 
-var player = document.getElementById(ytplayer.config.attrs.id);
 // #region ====== Executing =========
 (function () {
-    function onDocumentReady() {
-        // execute after settings are fully loaded
+    function onDocumentReady() { // execute after settings are fully loaded
         console.log("Ready");
+        function doMain() { // execute after extension's saved settings have been loaded
+            // Apply Settings when player src is changed
+            function applySettings() {
+                var functions = [];
+                var injectFn;
+                // set quality
+                injectFn = new InjectFn(setVideoQualityByAPI, youtubeSettingsObj.defaultQualty);
+                functions.push(injectFn);
+                // set annotation
+                injectFn = new InjectFn(setAnnotation, youtubeSettingsObj.showAnnotation);
+                functions.push(injectFn);
+                // set loop
+                injectFn = new InjectFn(setLoop, youtubeSettingsObj.loop);
+                functions.push(injectFn);
+                // inject code to page
+                injectScriptsFromFunctions(functions);
+            }
 
-        // Apply Settings when player src is changed
-        function applySettings() {
-            var functions = [];
-            var injectFn;
-            // set quality
-            injectFn = newInjectFn(setVideoQualityByAPI, youtubeSettingsObj.defaultQualty);
-            functions.push(injectFn);
-            // set annotation
-            injectFn = newInjectFn(setAnnotation, youtubeSettingsObj.showAnnotation);
-            functions.push(injectFn);
-            // set loop
-            injectFn = newInjectFn(setLoop, youtubeSettingsObj.loop);
-            functions.push(injectFn);
-            // inject code to page
-            injectScriptsFromFunctions(functions);
-        }
-        function doMain() {
-            var injectFn;
+            var injectFns = [];
             function addEventToPlayer() {
-                movie_player.addEventListener("onStateChange", function (state) {
-                    console.log(state + ": " + movie_player.getPlaybackQuality());
-                    if (state === 1) {
-                        applySettings();
-                    }
+                ytdf.Controller.player.addEventListener("onStateChange", function (state) {
+                    console.log(state + ": " + ytdf.Controller.player.getPlaybackQuality());
+                    //if (state === 1) {
+                    //    applySettings();
+                    //}
                 });
             }
-            injectScriptsFromFunctions[function () {
-                document.addEventListener("wtf", hello);
-            }]
+            function passSettingObj(settingObj) {
+                ytdf.Controller.settings = settingObj;
+            }
+            injectFns.push(new InjectFn(passSettingObj, youtubeSettingsObj));
+            injectFns.push(new InjectFn(addEventToPlayer));
+            injectScriptsFromFunctions(injectFns); // execute
             //var runTime = 0;
             //    var firstRun = setInterval(function () {
             //        if (isPlayerReady()) {// check if player is ready every 500ms
@@ -73,8 +74,11 @@ var player = document.getElementById(ytplayer.config.attrs.id);
             //        }
             //    }, 500);
         };
-        // load settings then execute doMain callback function
-        loadSettings(chromeStorage, doMain);
+        // inject ytdf object to source page
+        injectCodeFromSourceFileToBackgroundPage("js/contentscriptjs/injectscripts.js", function () {
+            // load youtube settings then execute doMain callback function
+            loadSettings(chromeStorage, doMain);
+        });
     }
 
     $(document).ready(onDocumentReady());

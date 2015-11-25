@@ -18,40 +18,45 @@ function loadSettings(chromeStorage, callback) {
     );
 }
 
-function injectScriptToBackgroundPage(scripts) {
-    if (isArray(scripts)) {
-        for (var i = 0; i < scripts.length; i++) {
-            var script = document.createElement('script');
-            script.textContent = scripts[i];
-            (document.head || document.documentElement).appendChild(script);
-            // inject scripts to <head>
-            script.parentNode.removeChild(script);
-            // remove injected scripts
-        }
-    }
-}
-// inject script from js files array
-function injectCodeFromSourceFileToBackgroundPage(filePaths) {
+// inject script from js files array or filename string
+function injectCodeFromSourceFileToBackgroundPage(filePaths, callbackFn) {
+    var script;
     if (isArray(filePaths)) {
         for (var i = 0; i < filePaths.length; i++) {
-            var script = document.createElement('script');
+            script = document.createElement('script');
             script.src = chrome.extension.getURL(filePaths[i]);
             (document.head || document.documentElement).appendChild(script);
         }
+    } else if (filePaths) {
+        script = document.createElement('script');
+        script.src = chrome.extension.getURL(filePaths);
+        if (typeof (callbackFn) == "function") script.onload = callbackFn;
+        (document.head || document.documentElement).appendChild(script);
     }
 }
-// inject script from functions array
-function injectScriptsFromFunctions(functions) {
+// inject script from a function or a functions array
+function injectScriptsFromFunctions(functions, callbackFn) {
+    var functionStringified;
+    var script;
     if (isArray(functions)) {
         for (var i = 0; i < functions.length; i++) {
-            var functionStringified = '(';
+            functionStringified = '(';
             functionStringified += functions[i].fn;
             functionStringified += ')(' + JSON.stringify(functions[i].args) + ');';
-            var script = document.createElement('script');
+            script = document.createElement('script');
             script.textContent = functionStringified;
             (document.head || document.documentElement).appendChild(script); // inject scripts to <head>
             script.parentNode.removeChild(script); // remove injected scripts
         }
+    } else if (functions) {
+        functionStringified = '(';
+        functionStringified += functions.fn;
+        functionStringified += ')(' + JSON.stringify(functions.args) + ');';
+        script = document.createElement('script');
+        script.textContent = functionStringified;
+        if (typeof (callbackFn) == "function") script.onload = callbackFn;
+        (document.head || document.documentElement).appendChild(script); // inject scripts to <head>
+        script.parentNode.removeChild(script); // remove injected scripts
     }
 }
 function getUrlVariables() {
@@ -65,13 +70,15 @@ function getUrlVariables() {
     }
     return variables;
 }
-// generate an injectable function
-function newInjectFn(fn, args) {
-    var injectFn = new Object();
-    injectFn.fn = fn;
-    injectFn.args = args;
-    return injectFn;
+//#region ========= Constructors =============
+
+function InjectFn(fn, args) { // An injectable function
+    this.fn = fn;
+    this.args = args;
+    return this;
 }
+
+//#endregion ========= Constructors =============
 //#endregion ========= Utillities ===========
 
 //#region ============= Player Controls =============

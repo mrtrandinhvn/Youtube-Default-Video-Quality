@@ -1,38 +1,38 @@
 {
-    "name": "Youtube Default Video Quality",
-    "version": "3.0.0",
-    "description": "This is an extension allows users to set default some settings for videos on www.youtube.com",
-    "content_scripts": [
-        {
-            "matches": [
-                "https://www.youtube.com/*"
-            ],
-            "js": [
-                "js/contentscriptjs/jquery-2.1.4.min.js",
-                "js/contentscriptjs/commonfns.js",
-                "js/contentscriptjs/main.js"
-            ]
-        }
-    ],
-    "icons": {
-        "16": "img/icon-16.png",
-        "32": "img/icon-32.png",
-        "48": "img/icon-48.png"
+  "name": "Youtube Default Video Quality",
+  "version": "3.0.0",
+  "description": "This is an extension allows users to set default some settings for videos on www.youtube.com",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.youtube.com/*"
+      ],
+      "js": [
+        "js/contentscriptjs/jquery-2.1.4.min.js",
+        "js/contentscriptjs/commonfns.js",
+        "js/contentscriptjs/main.js"
+      ]
+    }
+  ],
+  "icons": {
+    "16": "img/icon-16.png",
+    "32": "img/icon-32.png",
+    "48": "img/icon-48.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "16": "img/icon-16.png",
+      "32": "img/icon-32.png",
+      "48": "img/icon-48.png"
     },
-    "browser_action": {
-        "default_icon": {
-            "16": "img/icon-16.png",
-            "32": "img/icon-32.png",
-            "48": "img/icon-48.png"
-        },
-        "default_popup": "default_popup.html"
-    },
-    "permissions": [
-        "storage",
-        "activeTab"
-    ],
-    "web_accessible_resources": [
-    ],
-    "manifest_version": 2,
-    "author": "goseidinh"
+    "default_popup": "default_popup.html"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "web_accessible_resources": [
+    "js/contentscriptjs/injectscripts.js"
+  ],
+  "manifest_version": 2,
+  "author": "goseidinh"
 }
