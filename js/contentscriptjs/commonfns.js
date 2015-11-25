@@ -23,7 +23,6 @@ function injectScriptToBackgroundPage(scripts) {
         for (var i = 0; i < scripts.length; i++) {
             var script = document.createElement('script');
             script.textContent = scripts[i];
-
             (document.head || document.documentElement).appendChild(script);
             // inject scripts to <head>
             script.parentNode.removeChild(script);
@@ -31,8 +30,49 @@ function injectScriptToBackgroundPage(scripts) {
         }
     }
 }
+// inject script from js files array
+function injectCodeFromSourceFileToBackgroundPage(filePaths) {
+    if (isArray(filePaths)) {
+        for (var i = 0; i < filePaths.length; i++) {
+            var script = document.createElement('script');
+            script.src = chrome.extension.getURL(filePaths[i]);
+            (document.head || document.documentElement).appendChild(script);
+        }
+    }
+}
+// inject script from functions array
+function injectScriptsFromFunctions(functions) {
+    if (isArray(functions)) {
+        for (var i = 0; i < functions.length; i++) {
+            var functionStringified = '(';
+            functionStringified += functions[i].fn;
+            functionStringified += ')(' + JSON.stringify(functions[i].args) + ');';
+            var script = document.createElement('script');
+            script.textContent = functionStringified;
+            (document.head || document.documentElement).appendChild(script); // inject scripts to <head>
+            script.parentNode.removeChild(script); // remove injected scripts
+        }
+    }
+}
+function getUrlVariables() {
+    var variables = {};
+    var pair;
+    var variablesString = window.location.href.slice(window.location.href.indexOf("?") + 1);
+    var variablesSplit = variablesString.split("&");
+    for (var i = 0; i < variablesSplit.length; i++) {
+        pair = variablesSplit[i].split("=");
+        variables[pair[0]] = pair[1];
+    }
+    return variables;
+}
+// generate an injectable function
+function newInjectFn(fn, args) {
+    var injectFn = new Object();
+    injectFn.fn = fn;
+    injectFn.args = args;
+    return injectFn;
+}
 //#endregion ========= Utillities ===========
-
 
 //#region ============= Player Controls =============
 // order of those 2 array must be identical
@@ -62,24 +102,39 @@ function setAnnotation(show) {
         var annotationCssText = ".annotation.annotation-type-custom.iv-branding {display: none!important;}  div.video-annotations{display:none!important;}";
         if (document.head.getElementsByClassName("ytdfqlt-annotation").length > 0 !== annotationCssText) { // if this css text has already existed, skip this function
             var styleTag = document.createElement("style");
-			styleTag.className = "ytdfqlt-annotation";
+            styleTag.className = "ytdfqlt-annotation";
             styleTag.type = "text/css";
             styleTag.appendChild(document.createTextNode(annotationCssText));
             document.head.appendChild(styleTag);
         }
     }
 }
-function setVideoQuality(qualityValue) {
+function setVideoQualityByAPI(qualityValue) {
+    var urlVariables = getUrlVariables();
+    var args = {
+        videoId: urlVariables.v,
+        startSeconds: urlVariables.t,
+        endSeconds: null,
+        suggestedQuality: qualityValue
+    };
+    if (movie_player.getPlaybackQuality() != args.suggestedQuality) {
+        movie_player.loadVideoById(args);
+        movie_player.setPlaybackQuality(args.suggestedQuality);
+        movie_player.setAutonavState(document.querySelector("#autoplay-checkbox").checked ? 2 : 1);
+    }
+}
+
+function setVideoQualityByClicks(qualityValue) {
     var qualityArrayIndex = getQualityIndex(qualityValue);
     var allowClick;
-	// hide setting popup
-	var cssText = ".ytp-popup.ytp-settings-menu{display:none!important;}";
-	var styleTag = document.createElement("style");
-	styleTag.type = "text/css";
-	styleTag.appendChild(document.createTextNode(cssText));
-	document.head.appendChild(styleTag);
-	// end hide setting popup
-	
+    // hide setting popup
+    var cssText = ".ytp-popup.ytp-settings-menu{display:none!important;}";
+    var styleTag = document.createElement("style");
+    styleTag.type = "text/css";
+    styleTag.appendChild(document.createTextNode(cssText));
+    document.head.appendChild(styleTag);
+    // end hide setting popup
+
     // click on setting icon
     document.querySelectorAll("button.ytp-button.ytp-settings-button")[0].click();
     // click on quality option
@@ -118,8 +173,8 @@ function setVideoQuality(qualityValue) {
                     }
                     qualityArrayIndex--;
                 }
-				// un-hide setting popup
-				document.head.removeChild(styleTag);
+                // un-hide setting popup
+                document.head.removeChild(styleTag);
             }, 400);
         }
     }, 100);
