@@ -5,10 +5,10 @@ var annotationValueElements = document.getElementsByClassName("annotationValue")
 var loopValueElements = document.getElementsByClassName("loopValue");
 // local setting object
 var youtubeSettingsObj = {
-		defaultQualty: "default",
-		loop: false,
-		showAnnotation: true
-	};
+    defaultQuality: "default",
+    loop: false,
+    showAnnotation: true,
+};
 // chrome extension objects
 var chromeStorage = chrome.storage.sync;
 var chromeAppManifest = chrome.runtime.getManifest();
@@ -19,10 +19,10 @@ var chromeAppManifest = chrome.runtime.getManifest();
     function doMain(event) {
         bindEventToElements();
         loadSettings(chromeStorage);
-		// show app's version
-		document.getElementById("version").innerHTML = "Version: " + chromeAppManifest.version;
+        // show app's version
+        document.getElementById("version").innerHTML = "Updated to version " + chromeAppManifest.version + " (Newest)";
     };
-	// Wait for all markup finish loading
+    // Wait for all markup finish loading
     document.addEventListener("DOMContentLoaded", doMain);
 })();
 // ====== END Executing =========

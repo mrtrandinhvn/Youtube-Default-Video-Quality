@@ -3,7 +3,7 @@
 var qualityValueElements;
 // local setting object
 var youtubeSettingsObj = {
-    defaultQualty: "default"
+    defaultQuality: "default"
 };
 // chrome storage object
 var chromeStorage = chrome.storage.sync;
@@ -15,30 +15,49 @@ var chromeStorage = chrome.storage.sync;
         console.log("Ready");
         function doMain() { // execute after extension's saved settings have been loaded
             // Apply Settings when player src is changed
-            function applySettings() {
-                var functions = [];
-                var injectFn;
-                // set quality
-                injectFn = new InjectFn(setVideoQualityByAPI, youtubeSettingsObj.defaultQualty);
-                functions.push(injectFn);
-                // set annotation
-                injectFn = new InjectFn(setAnnotation, youtubeSettingsObj.showAnnotation);
-                functions.push(injectFn);
-                // set loop
-                injectFn = new InjectFn(setLoop, youtubeSettingsObj.loop);
-                functions.push(injectFn);
-                // inject code to page
-                injectScriptsFromFunctions(functions);
-            }
 
             var injectFns = [];
             function addEventToPlayer() {
-                ytdf.Controller.player.addEventListener("onStateChange", function (state) {
-                    console.log(state + ": " + ytdf.Controller.player.getPlaybackQuality());
-                    //if (state === 1) {
-                    //    applySettings();
-                    //}
-                });
+                var runTime = 0;
+                if (!yt.player.getPlayerByElement(ytplayer.config.attrs.id)) {
+                    var initPlayerInterval = setInterval(function () { // check for player to be created
+                        console.log("initPlayerInterval");
+                        if (yt.player.getPlayerByElement(ytplayer.config.attrs.id)) { // create new element if it doesn't exist
+                            ytdf.Player = document.getElementById(ytplayer.config.attrs.id);
+                            ytdf.Player.addEventListener("onStateChange", function (state) {
+                                if (state === 1 && runTime > 0) {
+                                    // set quality
+                                    ytdf.Controller.setVideoQualityByAPI(ytdf.Controller.settings.defaultQuality);
+                                    // set annotation
+                                    ytdf.Controller.setAnnotation(ytdf.Controller.settings.showAnnotation);
+                                    // set loop
+                                    ytdf.Controller.setLoop(ytdf.Controller.settings.loop);
+                                }
+                            });
+                            clearInterval(initPlayerInterval);
+                        }
+                    }, 500);
+                } else {
+                    ytdf.Player.addEventListener("onStateChange", function (state) {
+                        if (state === 1 && runTime > 0) { // second run
+                            // set quality
+                            ytdf.Controller.setVideoQualityByAPI(ytdf.Controller.settings.defaultQuality);
+                            // set annotation
+                            ytdf.Controller.setAnnotation(ytdf.Controller.settings.showAnnotation);
+                            // set loop
+                            ytdf.Controller.setLoop(ytdf.Controller.settings.loop);
+                        }
+                    });
+                    if (ytdf.Player.getPlayerState() === 1) { // first run to avoid the case that the video play before the handler for onStateChange event was set
+                        // set quality
+                        ytdf.Controller.setVideoQualityByAPI(ytdf.Controller.settings.defaultQuality);
+                        // set annotation
+                        ytdf.Controller.setAnnotation(ytdf.Controller.settings.showAnnotation);
+                        // set loop
+                        ytdf.Controller.setLoop(ytdf.Controller.settings.loop);
+                    }
+                }
+                runTime++;
             }
             function passSettingObj(settingObj) {
                 ytdf.Controller.settings = settingObj;
@@ -46,33 +65,6 @@ var chromeStorage = chrome.storage.sync;
             injectFns.push(new InjectFn(passSettingObj, youtubeSettingsObj));
             injectFns.push(new InjectFn(addEventToPlayer));
             injectScriptsFromFunctions(injectFns); // execute
-            //var runTime = 0;
-            //    var firstRun = setInterval(function () {
-            //        if (isPlayerReady()) {// check if player is ready every 500ms
-            //            applySettings();
-            //            runTime++;
-            //            // create an observer instance for video player to check if video.src has changed
-            //            var target = document.getElementById("movie_player").getElementsByTagName("video")[0];
-            //            var observer = new MutationObserver(function (mutations) {
-            //                mutations.forEach(function (mutation) {
-            //                    if (mutation.attributeName === "src") {
-            //                        if (mutation.target.src && runTime > 0) {
-            //                            // Handling second run and beyond
-            //                            // Apply Settings when player src is changed
-            //                            applySettings();
-            //                        }
-            //                    }
-            //                });
-            //            });
-            //            // configuration of the observer:
-            //            var config = {
-            //                attributes: true
-            //            };
-            //            // pass in the target node, as well as the observer options
-            //            observer.observe(target, config);
-            //            clearInterval(firstRun);
-            //        }
-            //    }, 500);
         };
         // inject ytdf object to source page
         injectCodeFromSourceFileToBackgroundPage("js/contentscriptjs/injectscripts.js", function () {

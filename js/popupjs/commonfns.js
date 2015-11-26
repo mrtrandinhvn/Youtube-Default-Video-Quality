@@ -13,7 +13,7 @@ function click_loopValue(event) {
 
 // =============  Events Handling =============
 function saveDefaultQuality(value) {
-    youtubeSettingsObj.defaultQualty = value;
+    youtubeSettingsObj.defaultQuality = value;
     var successMes = "Default Video Quality: " + value;
     updateSettingObj(successMes);
     updateSelectedOption();
@@ -41,7 +41,7 @@ function updateSettingObj(successMessage) {
 function updateSelectedOption() {
     // quality
     for (var i = 0; i < qualityValueElements.length; i++) {
-        if (qualityValueElements[i].dataset.quality == youtubeSettingsObj.defaultQualty) {
+        if (qualityValueElements[i].dataset.quality == youtubeSettingsObj.defaultQuality) {
             qualityValueElements[i].className = "qualityValue selected";
         } else {
             qualityValueElements[i].className = "qualityValue";
@@ -78,6 +78,11 @@ function loadSettings(chromeStorage) {
     chromeStorage.get(null, function (data) {
         if (data.youtubeSettingsObj) {
             youtubeSettingsObj = data.youtubeSettingsObj;
+            if (youtubeSettingsObj.defaultQualty) {
+                // copy data to the right spelled property then remove the misspelled one
+                youtubeSettingsObj.defaultQuality = youtubeSettingsObj.defaultQualty;
+                youtubeSettingsObj.defaultQualty = undefined;
+            }
         }
         updateSelectedOption();
     });

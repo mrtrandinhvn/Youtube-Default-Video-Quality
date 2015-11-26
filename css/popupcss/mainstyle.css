@@ -21,47 +21,53 @@ body {
     background-color: greenyellow;
 }
 
-.settings{
-	float:left;
-	width:30%;
-	border:solid 1px black;
-	height:21em;
-	margin-left:-1px;
+.settings {
+    float: left;
+    width: 30%;
+    border: solid 1px black;
+    height: 21em;
+    margin-left: -1px;
 }
-.header{
+
+.header {
     width: 100%;
     font-weight: bold;
     text-align: center;
     font-size: 1.5em;
     color: #717171;
     height: 1.5em;
-	border-bottom: 1px solid black;
-	padding: 5px 0;
+    border-bottom: 1px solid black;
+    padding: 5px 0;
     background-color: #C3FFDB;
 }
+
 input.annotationValue,
-input.loopValue{
-	height: 2em;
+input.loopValue {
+    height: 2em;
     width: 100%;
     margin: 5px 0;
 }
+
 .clear {
-	clear:both!important;
+    clear: both !important;
 }
-#message{
-	color:green;
-	text-align:center;
+
+#message {
+    color: green;
+    text-align: center;
 }
-#version{
-	font-weight: bold;
+
+#version {
+    font-weight: bold;
     font-size: 16px;
     margin: 5px;
-	color: #717171;
+    color: #7DCE00;
 }
-#warning{
-	color: red;
-	font-size: 15px;
-	width: 91%;
-	margin: 5px;
-	font-weight: bold;
+
+#warning {
+    color: red;
+    font-size: 15px;
+    width: 91%;
+    margin: 5px;
+    font-weight: bold;
 }
