@@ -15,11 +15,10 @@ var ytdf = {
             }
         },
         setVideoQualityByAPI: function (qualityValue) {
-            var urlVariables = ytdf.Utilities.getUrlVariables();
-            var startTime = urlVariables.t ? urlVariables.t : urlVariables.time_continue;
+            var videoData = ytdf.Player.getVideoData();
             var args = {
-                videoId: urlVariables.v,
-                startSeconds: startTime,
+                videoId: videoData.video_id,
+                startSeconds: ytdf.Player.getCurrentTime(),
                 endSeconds: null,
                 suggestedQuality: qualityValue
             };
