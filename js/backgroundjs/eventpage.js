@@ -4,6 +4,6 @@ chrome.runtime.onInstalled.addListener(function (details) {
         url: "/default_popup.html",
         width: 500,
         height: 500,
-        type: "panel"
+        type: "popup"
     });
 });
