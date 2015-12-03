@@ -1,6 +1,7 @@
 var ytdf = {
     Player: document.getElementById(ytplayer.config.attrs.id),
     Controller: {
+        videoId: null,
         settings: null,
         setAnnotation: function (show) {
             if (show === false) {
@@ -22,11 +23,12 @@ var ytdf = {
                 endSeconds: null,
                 suggestedQuality: qualityValue
             };
-            if ((ytdf.Player.getPlaybackQuality() != args.suggestedQuality) && (ytdf.Player.getPlaybackQuality() != ytdf.Player.getAvailableQualityLevels()[0])) { // avoid duplicate set
+            if ((ytdf.Player.getPlaybackQuality() != args.suggestedQuality) && (ytdf.Player.getPlaybackQuality() != ytdf.Player.getAvailableQualityLevels()[0]) && (args.videoId != ytdf.Controller.videoId)) { // avoid duplicate set
                 ytdf.Player.loadVideoById(args);
                 ytdf.Player.setPlaybackQuality(args.suggestedQuality);
                 ytdf.Player.setAutonavState(document.querySelector("#autoplay-checkbox").checked ? 2 : 1);
             }
+            ytdf.Controller.videoId = args.videoId;
         },
         setLoop: function (loop) {
             if (loop) {

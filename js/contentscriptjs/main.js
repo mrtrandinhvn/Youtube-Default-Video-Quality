@@ -18,6 +18,7 @@ var chromeStorage = chrome.storage.sync;
 
             var injectFns = [];
             function addEventToPlayer() {
+                console.log("addEventToPlayer");
                 var runTime = 0;
                 if (!yt.player.getPlayerByElement(ytplayer.config.attrs.id)) {
                     var initPlayerInterval = setInterval(function () { // check for player to be created

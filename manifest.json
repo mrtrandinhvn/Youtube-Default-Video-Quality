@@ -1,6 +1,6 @@
 {
     "name": "Youtube Default Video Quality",
-    "version": "3.1.0",
+    "version": "3.2.0",
     "description": "This is an extension allows users to set default some settings for videos on www.youtube.com",
     "content_scripts": [
         {
