@@ -24,10 +24,10 @@ var ytdf = {
                 suggestedQuality: qualityValue
             };
             if (args.videoId != ytdf.Controller.videoId) { // avoid duplicate set
+				ytdf.Controller.videoId = args.videoId;
                 ytdf.Player.loadVideoById(args);
                 ytdf.Player.setPlaybackQuality(args.suggestedQuality);
                 ytdf.Player.setAutonavState(document.querySelector("#autoplay-checkbox").checked ? 2 : 1);
-                ytdf.Controller.videoId = args.videoId;
             }
         },
         setLoop: function (loop) {
