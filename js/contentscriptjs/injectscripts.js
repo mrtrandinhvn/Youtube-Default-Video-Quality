@@ -25,7 +25,9 @@ var ytdf = {
             };
             if (args.videoId != ytdf.Controller.videoId) { // avoid duplicate set
                 ytdf.Controller.videoId = args.videoId;
-                ytdf.Player.loadVideoById(args);
+				if(!ytdf.Utilities.getUrlVariables().list){
+					ytdf.Player.loadVideoById(args);
+				}
                 ytdf.Player.setPlaybackQuality(args.suggestedQuality);
                 if (document.querySelector("#autoplay-checkbox")) {
                     ytdf.Player.setAutonavState(document.querySelector("#autoplay-checkbox").checked ? 2 : 1);
