@@ -10,7 +10,6 @@ body {
     font-size: 1.5em;
     color: #717171;
     height: 1.5em;
-    border-radius: .3em;
 }
 
     .qualityValue:hover {
@@ -21,13 +20,18 @@ body {
     background-color: greenyellow;
 }
 
-.settings {
-    float: left;
-    width: 30%;
-    border: solid 1px black;
-    height: 21em;
-    margin-left: -1px;
+.settings-container {
+    margin: 5px auto;
+    width: 97%;
 }
+
+    .settings-container .settings {
+        float: left;
+        width: 49%;
+        border: solid 1px black;
+        height: 21.5em;
+        margin-left: -1px;
+    }
 
 .header {
     width: 100%;
