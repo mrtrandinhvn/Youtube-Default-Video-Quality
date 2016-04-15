@@ -23,7 +23,7 @@ var ytdf = {
                 endSeconds: null,
                 suggestedQuality: qualityValue
             };
-            if (args.videoId != ytdf.Controller.videoId) { // avoid duplicate set
+            if (args.videoId != ytdf.Controller.videoId) { // avoid duplicated set
                 ytdf.Controller.videoId = args.videoId;
 				if(!ytdf.Utilities.getUrlVariables().list){
 					ytdf.Player.loadVideoById(args);
@@ -53,7 +53,7 @@ var ytdf = {
         isArray: function (object) {
             return Object.prototype.toString.call(object) === "[object Array]";
         },
-        //#region ============ Utillities ===========
+        //#region ============ Utilities ===========
         getUrlVariables: function () {
             var variables = {};
             var pair;
@@ -65,7 +65,7 @@ var ytdf = {
             }
             return variables;
         },
-        //#endregion ========= Utillities ===========
+        //#endregion ========= Utilities ===========
 
         //#region ============= Player Controls =============
         // order of those 2 array must be identical

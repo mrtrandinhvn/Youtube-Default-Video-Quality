@@ -7,6 +7,7 @@ var youtubeSettingsObj = {
 };
 // chrome storage object
 var chromeStorage = chrome.storage.sync;
+var chromeAppManifest = chrome.runtime.getManifest();
 // #endregion ======= END Key Objects =========
 
 // #region ====== Executing =========
@@ -68,10 +69,18 @@ var chromeStorage = chrome.storage.sync;
             injectScriptsFromFunctions(injectFns); // execute
         };
         // inject ytdf object to source page
-        injectCodeFromSourceFileToBackgroundPage("js/contentscriptjs/injectscripts.js", function () {
+        injectCodeFromSourceFileToBackgroundPage(chromeAppManifest.web_accessible_resources[0], function () {
             // load youtube settings then execute doMain callback function
             loadSettings(chromeStorage, doMain);
         });
+        // Loop timer
+        addCssLinkToPage(chromeAppManifest.web_accessible_resources[1]);
+        readTextFromFile(chromeAppManifest.web_accessible_resources[2], function (data) {
+            //$(data).insertAfter(".yt-subscription-button-subscriber-count-branded-horizontal.yt-subscriber-count");
+            $(data).insertBefore("#watch8-action-buttons");
+        });
+        // End Loop timer
+
     }
 
     $(document).ready(onDocumentReady());

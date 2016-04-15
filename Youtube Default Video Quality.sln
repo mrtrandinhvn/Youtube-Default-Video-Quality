@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Youtube Default Video Quality", "http://localhost:42736", "{29F0468B-3688-4D27-8AD9-F2E88CBD5C3A}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "true"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_42736"
+		Debug.AspNetCompiler.PhysicalPath = "F:\MyProject\ChromeExtensions\Youtube Default Video Quality\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_42736\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_42736"
+		Release.AspNetCompiler.PhysicalPath = "F:\MyProject\ChromeExtensions\Youtube Default Video Quality\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_42736\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "F:\MyProject\ChromeExtensions\Youtube Default Video Quality\"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{29F0468B-3688-4D27-8AD9-F2E88CBD5C3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29F0468B-3688-4D27-8AD9-F2E88CBD5C3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

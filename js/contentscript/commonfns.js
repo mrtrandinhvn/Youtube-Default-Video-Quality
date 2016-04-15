@@ -2,7 +2,7 @@
 function isArray(object) {
     return Object.prototype.toString.call(object) === "[object Array]";
 }
-//#region ============ Utillities ===========
+//#region ============ Utilities ===========
 
 // load youtube settings
 function loadSettings(chromeStorage, callback) {
@@ -23,12 +23,12 @@ function injectCodeFromSourceFileToBackgroundPage(filePaths, callbackFn) {
     var script;
     if (isArray(filePaths)) {
         for (var i = 0; i < filePaths.length; i++) {
-            script = document.createElement('script');
+            script = document.createElement("script");
             script.src = chrome.extension.getURL(filePaths[i]);
             (document.head || document.documentElement).appendChild(script);
         }
     } else if (filePaths) {
-        script = document.createElement('script');
+        script = document.createElement("script");
         script.src = chrome.extension.getURL(filePaths);
         if (typeof (callbackFn) == "function") script.onload = callbackFn;
         (document.head || document.documentElement).appendChild(script);
@@ -40,19 +40,19 @@ function injectScriptsFromFunctions(functions, callbackFn) {
     var script;
     if (isArray(functions)) {
         for (var i = 0; i < functions.length; i++) {
-            functionStringified = '(';
+            functionStringified = "(";
             functionStringified += functions[i].fn;
-            functionStringified += ')(' + JSON.stringify(functions[i].args) + ');';
-            script = document.createElement('script');
+            functionStringified += ")(" + JSON.stringify(functions[i].args) + ");";
+            script = document.createElement("script");
             script.textContent = functionStringified;
             (document.head || document.documentElement).appendChild(script); // inject scripts to <head>
             script.parentNode.removeChild(script); // remove injected scripts
         }
     } else if (functions) {
-        functionStringified = '(';
+        functionStringified = "(";
         functionStringified += functions.fn;
-        functionStringified += ')(' + JSON.stringify(functions.args) + ');';
-        script = document.createElement('script');
+        functionStringified += ")(" + JSON.stringify(functions.args) + ");";
+        script = document.createElement("script");
         script.textContent = functionStringified;
         if (typeof (callbackFn) == "function") script.onload = callbackFn;
         (document.head || document.documentElement).appendChild(script); // inject scripts to <head>
@@ -70,6 +70,42 @@ function getUrlVariables() {
     }
     return variables;
 }
+function addCssTextToPage(cssText) {
+    if (!cssText) return;
+    var head = document.head;
+    var styleTag = document.createElement("style");
+    styleTag.type = "text/css";
+    styleTag.appendChild(document.createTextNode(cssText));
+    head.appendChild(styleTag);
+}
+// Remember link has to be registered under "web_accessible_resources" key in manifest.json file
+function addCssLinkToPage(linkSrc) {
+    if (!linkSrc) {
+        return;
+    }
+    var linkTag = document.createElement("link");
+    var head = document.head;
+    linkTag.type = "text/css";
+    linkTag.rel = "stylesheet";
+    linkTag.href = chrome.extension.getURL(linkSrc);
+    head.appendChild(linkTag);
+}
+// Remember path has to be registered under "web_accessible_resources" key in manifest.json file
+function readTextFromFile(path, callback) {
+    if (!path) {
+        return;
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", chrome.extension.getURL(path), true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+            if (typeof (callback) == "function") {
+                callback(xhr.responseText);
+            }
+        }
+    };
+    xhr.send();
+}
 //#region ========= Constructors =============
 
 function InjectFn(fn, args) { // An injectable function
@@ -79,7 +115,7 @@ function InjectFn(fn, args) { // An injectable function
 }
 
 //#endregion ========= Constructors =============
-//#endregion ========= Utillities ===========
+//#endregion ========= Utilities ===========
 
 //#region ============= Player Controls =============
 // order of those 2 array must be identical
