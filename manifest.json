@@ -10,8 +10,12 @@
             "js": [
                 "js/contentscript/jquery-2.1.4.min.js",
                 "js/contentscript/commonfns.js",
+                "js/contentscript/looptimer.js",
+                "js/contentscript/embedpage.js",
+                "js/contentscript/normalpage.js",
                 "js/contentscript/main.js"
-            ]
+            ],
+            "css": [ "css/contentscript/injectcss.css" ]
         }
     ],
     "icons": {
@@ -28,12 +32,13 @@
         "default_popup": "html/default_popup.html"
     },
     "permissions": [
-        "storage"
+        "storage",
+        "tabs"
     ],
     "web_accessible_resources": [
         "js/contentscript/injectscripts.js", // [0]
-        "css/contentscript/timer.css", // [1]
-        "html/loop-timer-markup.html" //[2]
+        "html/loop-button-markup.html", // [1]
+        "html/loop-timer-markup.html" // [2]
     ],
     "manifest_version": 2,
     "author": "goseidinh"

@@ -106,14 +106,22 @@ function readTextFromFile(path, callback) {
     };
     xhr.send();
 }
-//#region ========= Constructors =============
 
+function getTimeInput(selector) {
+    var value = $(selector).val();
+    if (value && !isNaN(value)) {
+        return parseInt(value);
+    } else {
+        return 0;
+    }
+}
+
+//#region ========= Constructors =============
 function InjectFn(fn, args) { // An injectable function
     this.fn = fn;
     this.args = args;
     return this;
 }
-
 //#endregion ========= Constructors =============
 //#endregion ========= Utilities ===========
 

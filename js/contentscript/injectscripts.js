@@ -25,9 +25,9 @@ var ytdf = {
             };
             if (args.videoId != ytdf.Controller.videoId) { // avoid duplicated set
                 ytdf.Controller.videoId = args.videoId;
-				if(!ytdf.Utilities.getUrlVariables().list){
-					ytdf.Player.loadVideoById(args);
-				}
+                if (!ytdf.Utilities.getUrlVariables().list) {
+                    ytdf.Player.loadVideoById(args);
+                }
                 ytdf.Player.setPlaybackQuality(args.suggestedQuality);
                 if (document.querySelector("#autoplay-checkbox")) {
                     ytdf.Player.setAutonavState(document.querySelector("#autoplay-checkbox").checked ? 2 : 1);
@@ -46,14 +46,14 @@ var ytdf = {
                 return true;
             }
             return false;
-        },
+        }
     },
     Utilities: {
+        //#region ============ Utilities ===========
         // check if object is an array or not
         isArray: function (object) {
             return Object.prototype.toString.call(object) === "[object Array]";
         },
-        //#region ============ Utilities ===========
         getUrlVariables: function () {
             var variables = {};
             var pair;
