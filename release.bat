@@ -1,4 +1,5 @@
 if exist "release" rd "release" /s /q
+del "release.zip"
 mkdir "release"
 xcopy css release\css\ /e /y
 xcopy img release\img\ /e /y
