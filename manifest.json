@@ -1,6 +1,6 @@
 {
     "name": "Youtube Default Video Quality",
-    "version": "4.0.0",
+    "version": "4.0.1",
     "description": "This extension allows you to set some settings for videos on www.youtube.com like default quality, hide annotations or repeat video",
     "content_scripts": [
         {
@@ -32,13 +32,12 @@
         "default_popup": "html/default_popup.html"
     },
     "permissions": [
-        "storage",
-        "tabs"
+        "storage"
     ],
     "web_accessible_resources": [
-        "js/contentscript/injectscripts.js", // [0]
-        "html/loop-button-markup.html", // [1]
-        "html/loop-timer-markup.html" // [2]
+        "js/contentscript/injectscripts.js",
+        "html/loop-button-markup.html",
+        "html/loop-timer-markup.html"
     ],
     "manifest_version": 2,
     "author": "goseidinh"
