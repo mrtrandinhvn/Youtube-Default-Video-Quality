@@ -51,13 +51,13 @@ function initializeTimer() {
     // Loop timer
     readTextFromFile(chromeAppManifest.web_accessible_resources[1], function (data) {
         // loop timer toggle button
-        $(data).insertAfter(".yt-subscription-button-subscriber-count-branded-horizontal.yt-subscriber-count");
+        $(data).insertAfter("#watch7-subscription-container");
         $(loopBtnSelector).on("click", toggleLoopTimer);
     });
-    readTextFromFile(chromeAppManifest.web_accessible_resources[2], function (data) {
-        // loop timer
-        $(data).insertBefore("#watch8-action-buttons");
-        $(openBtnSelector).on("click", openLoopLink);
-    });
+	readTextFromFile(chromeAppManifest.web_accessible_resources[2], function (data) {
+		// loop timer
+		$(data).insertBefore("#watch8-action-buttons");
+		$(openBtnSelector).on("click", openLoopLink);
+	});
     // End Loop timer
 }
