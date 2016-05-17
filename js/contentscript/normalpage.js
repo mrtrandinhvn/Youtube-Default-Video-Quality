@@ -49,6 +49,18 @@ function doMainNormalPage() {
                     }
                 }
                 runTime++;
+                window.addEventListener("message", function (event) {
+                    // We only accept messages from ourselves
+                    if (event.source != window)
+                        return;
+                    if (event.data.type) {
+                        switch (event.data.type) {
+                            case "SHOW_CURRENTTIME":
+                                document.querySelector("input.start.second").value = ytdf.Player.getCurrentTime();
+                                break;
+                        }
+                    }
+                }, false);
             }
             function passSettingObj(settingObj) {
                 ytdf.Controller.settings = settingObj;
@@ -70,8 +82,12 @@ function doMainNormalPage() {
         // We only accept messages from ourselves
         if (event.source != window)
             return;
-        if (event.data.type && (event.data.type == "INITIALIZE_TIMER")) {
-            initializeTimer();
+        if (event.data.type) {
+            switch (event.data.type) {
+                case "INITIALIZE_TIMER":
+                    initializeTimer();
+                    break;
+            }
         }
     }, false);
 }

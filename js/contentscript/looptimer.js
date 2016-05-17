@@ -26,7 +26,11 @@ function openLoopLink() {
         window.open(link, "_blank");
     }
 }
+
 function toggleLoopTimer() {
+    if ($(".ytdf.block.active").length == 0) {
+        window.postMessage({ type: "SHOW_CURRENTTIME" }, "*");
+    }
     $(".ytdf.block").toggleClass("active");
 }
 function generateLoopLink() {
@@ -54,10 +58,10 @@ function initializeTimer() {
         $(data).insertAfter("#watch7-subscription-container");
         $(loopBtnSelector).on("click", toggleLoopTimer);
     });
-	readTextFromFile(chromeAppManifest.web_accessible_resources[2], function (data) {
-		// loop timer
-		$(data).insertBefore("#watch8-action-buttons");
-		$(openBtnSelector).on("click", openLoopLink);
-	});
+    readTextFromFile(chromeAppManifest.web_accessible_resources[2], function (data) {
+        // loop timer
+        $(data).insertBefore("#watch8-action-buttons");
+        $(openBtnSelector).on("click", openLoopLink);
+    });
     // End Loop timer
 }
